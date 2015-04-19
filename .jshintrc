@@ -1,0 +1,32 @@
+{
+  "maxerr": 50,
+  // Enforcing
+  "bitwise": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "forin": true,
+  "freeze": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "noempty": true,
+  "nonbsp": true,
+  "quotmark": "single",
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "maxparams": false,
+  "maxdepth": 3,
+  "maxstatements": 15,
+  "maxcomplexity": false,
+  "maxlen": 120,
+
+  "esnext": true,
+
+  // Environments
+  "devel": true, // Development/debugging (alert, confirm, etc)
+  "node": true
+}

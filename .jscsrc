@@ -1,0 +1,28 @@
+{
+  "preset": "node-style-guide",
+  "disallowSpacesInFunction": null,
+  "requireTrailingComma": null,
+  "validateLineBreaks": null,
+  "requireCapitalizedComments": null,
+  "validateIndentation": 2,
+  "esnext": true,
+  "requireSpacesInFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  },
+  "disallowQuotedKeysInObjects": true,
+  "requireSpacesInsideObjectBrackets": "all",
+  "requirePaddingNewLineAfterVariableDeclaration": true,
+  "requirePaddingNewlinesBeforeKeywords": [
+    "do", "for", "if", "switch", "case", "try", "void", "while", "with", "return", "typeof"
+  ],
+  "requireSpacesInsideArrayBrackets": "allButNested",
+  "disallowPaddingNewlinesInBlocks": true,
+  "disallowSpaceBeforePostfixUnaryOperators": true,
+  "disallowMultipleLineStrings": true,
+  "disallowMultipleLineBreaks": true,
+  "disallowMultipleSpaces": true,
+  "requireLineFeedAtFileEnd": true,
+  "requireSemicolons": true,
+  "maximumLineLength": 120
+}
