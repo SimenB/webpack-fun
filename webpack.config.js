@@ -37,7 +37,8 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 }),
-    new ExtractTextPlugin('styles.css')
+    new ExtractTextPlugin('styles.css'),
+    new webpack.optimize.UglifyJsPlugin({ compress: { side_effects: false, conditionals: false } })
   ],
   postcss: [ autoprefixer({ browsers: [ 'Chrome >= 33', 'IE >= 8' ] }) ]
 };

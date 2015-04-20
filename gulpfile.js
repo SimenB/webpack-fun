@@ -6,12 +6,6 @@ var webpack = require('gulp-webpack-build');
 
 var src = './src';
 var dest = './build';
-var webpackOptions = {
-  debug: true,
-  devtool: '#source-map',
-  watchDelay: 200,
-  entry: './hpp/scripts/index.js'
-};
 var webpackConfig = {
   useMemoryFs: true,
   progress: true
@@ -42,7 +36,14 @@ gulp.task('move', [ 'clean' ], function () {
     .pipe(gulp.dest(dest));
 });
 
-gulp.task('webpack', [ 'move' ], function () {
+gulp.task('webpack:dev', [ 'move' ], function () {
+  var webpackOptions = {
+    debug: true,
+    devtool: '#source-map',
+    watchDelay: 200,
+    entry: './hpp/scripts/index.js'
+  };
+
   return gulp
     .src(CONFIG_FILENAME)
     .pipe(webpack.configure(webpackConfig))
@@ -57,6 +58,31 @@ gulp.task('webpack', [ 'move' ], function () {
       warnings: true
     }))
     .pipe(gulp.dest(''));
+});
+
+gulp.task('webpack:prod', [ 'move' ], function () {
+  var webpackOptions = {
+    entry: './hpp/scripts/index.js'
+  };
+
+  return gulp
+    .src(CONFIG_FILENAME)
+    .pipe(webpack.configure(webpackConfig))
+    .pipe(webpack.overrides(webpackOptions))
+    .pipe(webpack.compile())
+    .pipe(webpack.format({
+      version: false,
+      timings: true
+    }))
+    .pipe(webpack.failAfter({
+      errors: true,
+      warnings: true
+    }))
+    .pipe(gulp.dest(''))
+    .on('error', function () {
+      console.log('morn');
+      console.log(arguments);
+    });
 });
 
 gulp.task('watch', [ 'webpack' ], function () {
