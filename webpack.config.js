@@ -15,6 +15,11 @@ module.exports = {
     hotUpdateChunkFilename: '[hash]/js/[id].update.js'
   },
   recordsOutputPath: path.join(__dirname, 'records.json'),
+  resolve: {
+    alias: {
+      'common-assets': path.resolve('src', 'common')
+    }
+  },
   module: {
     loaders: [
       { test: /\.json$/, loader: 'json-loader' },

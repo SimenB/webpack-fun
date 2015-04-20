@@ -10,7 +10,7 @@ var webpackOptions = {
   debug: true,
   devtool: '#source-map',
   watchDelay: 200,
-  entry: './scripts/index.js'
+  entry: './hpp/scripts/index.js'
 };
 var webpackConfig = {
   useMemoryFs: true,
@@ -38,7 +38,7 @@ gulp.task('lint', function () {
 
 gulp.task('move', [ 'clean' ], function () {
   return gulp
-    .src('src/index.html')
+    .src('src/common/index.html')
     .pipe(gulp.dest(dest));
 });
 
