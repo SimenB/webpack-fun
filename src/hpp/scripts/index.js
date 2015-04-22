@@ -8,4 +8,4 @@ import 'common-assets/styles/style.styl';
 sout('halla!');
 writeInHeader('Simen');
 
-import 'common-assets/scripts/dev-module';
+import 'dev-module';

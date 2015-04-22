@@ -1,8 +1,14 @@
+'use strict';
+
 var webpack = require('webpack');
 var path = require('path');
 
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer-core');
+
+function createLibPath(lib) {
+  return path.resolve('src', 'common', 'scripts', 'libs', lib);
+}
 
 module.exports = {
   context: path.resolve('./src'),
@@ -17,7 +23,8 @@ module.exports = {
   recordsOutputPath: path.join(__dirname, 'records.json'),
   resolve: {
     alias: {
-      'common-assets': path.resolve('src', 'common')
+      'common-assets': path.resolve('src', 'common'),
+      noop: path.resolve('src', 'common', 'scripts', 'noop')
     }
   },
   module: {
@@ -36,9 +43,8 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 }),
     new ExtractTextPlugin('styles.css'),
-    new webpack.optimize.UglifyJsPlugin({ compress: { side_effects: false, conditionals: false } })
+    new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 })
   ],
   postcss: [ autoprefixer({ browsers: [ 'Chrome >= 33', 'IE >= 8' ] }) ]
 };

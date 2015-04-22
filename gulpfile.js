@@ -41,7 +41,12 @@ gulp.task('webpack:dev', [ 'move' ], function () {
     debug: true,
     devtool: '#source-map',
     watchDelay: 200,
-    entry: './hpp/scripts/index.js'
+    entry: './hpp/scripts/index.js',
+    resolve: {
+      alias: {
+        'dev-module': 'common-assets/scripts/noop'
+      }
+    }
   };
 
   return gulp
@@ -61,8 +66,24 @@ gulp.task('webpack:dev', [ 'move' ], function () {
 });
 
 gulp.task('webpack:prod', [ 'move' ], function () {
+  var webpackCore = require('webpack');
+
   var webpackOptions = {
-    entry: './hpp/scripts/index.js'
+    entry: './hpp/scripts/index.js',
+    resolve: {
+      alias: {
+        'dev-module': 'noop'
+      }
+    },
+    plugins: [
+      new webpackCore.optimize.UglifyJsPlugin({
+        compress: {
+          side_effects: false,
+          conditionals: false
+        }
+      }),
+      new webpackCore.optimize.DedupePlugin()
+    ]
   };
 
   return gulp
