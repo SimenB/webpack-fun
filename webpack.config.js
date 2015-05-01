@@ -27,7 +27,7 @@ module.exports = {
       { test: /\.json$/, loader: 'json' },
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel?optional=runtime' },
       { test: /\.styl$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!stylus') },
-      { test: /\.hbs$/, loader: 'handlebars' },
+      { test: /\.hbs$/, loader: 'handlebars', query: { inlineRequires: '\/images\/' } },
       { test: /\.png$/, loader: 'url?prefix=img/&limit=5000' },
       { test: /\.jpg$/, loader: 'url?prefix=img/&limit=5000' },
       { test: /\.woff(2)?$/, loader: 'url?prefix=font/&limit=5000' },
