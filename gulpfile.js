@@ -42,7 +42,7 @@ gulp.task('webpack:dev', [ 'clean' ], function () {
       path: path.resolve('src', 'hpp', 'build')
     },
     debug: true,
-    devtool: '#source-map',
+    devtool: '#eval-source-map',
     watchDelay: 200,
     entry: './hpp/scripts/index.js',
     resolve: {
@@ -142,7 +142,7 @@ gulp.task('webpack-dev-server', function () {
       path: path.resolve('src', 'hpp', 'build')
     },
     debug: true,
-    devtool: '#source-map',
+    devtool: '#eval-source-map',
     watchDelay: 200,
     entry: [ 'webpack-dev-server/client?http://0.0.0.0:8080', 'webpack/hot/only-dev-server', './hpp/scripts/index.js' ],
     resolve: {
@@ -172,4 +172,13 @@ gulp.task('webpack-dev-server', function () {
       // Server listening
       gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/');
     });
+});
+
+gulp.task('test', function (done) {
+  var karma = require('karma').server;
+
+  karma.start({
+    configFile: path.resolve('karma.conf.js'),
+    singleRun: true
+  }, done);
 });
