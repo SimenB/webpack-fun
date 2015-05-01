@@ -3,8 +3,6 @@
 import Backbone from 'backbone';
 import template from '../templates/header.hbs';
 
-import '../styles/header.styl';
-
 var myView = Backbone.Layout.extend({
   template: template,
 

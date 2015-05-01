@@ -13,7 +13,7 @@ function createLibPath (lib) {
 module.exports = {
   context: path.resolve('./src'),
   output: {
-    filename: 'assets/kj-[hash].js'
+    filename: 'kj-[hash].js'
   },
   recordsOutputPath: path.resolve('./records.json'),
   resolve: {
@@ -30,15 +30,14 @@ module.exports = {
       { test: /\.hbs$/, loader: 'handlebars' },
       { test: /\.png$/, loader: 'url?prefix=img/&limit=5000' },
       { test: /\.jpg$/, loader: 'url?prefix=img/&limit=5000' },
-      { test: /\.gif$/, loader: 'url?prefix=img/&limit=5000' },
-      { test: /\.woff$/, loader: 'url?prefix=font/&limit=5000' },
+      { test: /\.woff(2)?$/, loader: 'url?prefix=font/&limit=5000' },
       { test: /\.eot$/, loader: 'file?prefix=font/' },
       { test: /\.ttf$/, loader: 'file?prefix=font/' },
       { test: /\.svg$/, loader: 'file?prefix=font/' }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('assets/kj-[contenthash].css'),
+    new ExtractTextPlugin('kj-[contenthash].css'),
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 })
   ],
   postcss: [ autoprefixer({ browsers: [ 'Chrome >= 33', 'IE >= 8' ] }) ]

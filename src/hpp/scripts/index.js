@@ -6,7 +6,7 @@ import WriteInHeader from 'common-assets/scripts/dom';
 
 import Backbone from 'backbone';
 
-import 'common-assets/styles/style.styl';
+import '../styles/hpp.styl';
 
 var model = new Backbone.Model({ name: 'Simen Bekkhus' });
 
