@@ -17,7 +17,7 @@ describe('mee', function () {
     var finished = false;
 
     finished = fakeResponse(greetingsResponse, function () {
-      module();
+      module('Simen');
     });
 
     waitsFor(function () {

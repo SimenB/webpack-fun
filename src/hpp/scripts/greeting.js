@@ -8,10 +8,10 @@ var MyModel = Backbone.Model.extend({
   url: 'hello'
 });
 
-function callback () {
+function callback (name) {
   var modelAgain = new MyModel();
 
-  modelAgain.fetch({ data: $.param({ name: 'Simen' }) }).done(function () {
+  modelAgain.fetch({ data: $.param({ name: name }) }).done(function () {
     sout(modelAgain.toJSON());
   });
 }

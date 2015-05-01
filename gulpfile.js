@@ -42,7 +42,7 @@ gulp.task('webpack:dev', [ 'clean' ], function () {
       path: path.resolve('src', 'hpp', 'build')
     },
     debug: true,
-    devtool: '#eval-source-map',
+    devtool: '#source-map',
     watchDelay: 200,
     entry: './hpp/scripts/index.js',
     resolve: {
@@ -142,7 +142,7 @@ function devServer (project) {
       path: path.resolve('src', project, 'build')
     },
     debug: true,
-    devtool: '#eval-source-map',
+    devtool: '#source-map',
     watchDelay: 200,
     entry: [
       'webpack-dev-server/client?http://0.0.0.0:8080',
