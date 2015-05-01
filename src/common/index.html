@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html{% if(o.htmlWebpackPlugin.files.manifest) { %} manifest="{%= o.htmlWebpackPlugin.files.manifest %}"{% } %}>
 <head>
-  <title>Webpack fun!</title>
-  <link href="styles.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>{%=o.htmlWebpackPlugin.options.title || 'Webpack App'%}</title>
+  {% for (var css in o.htmlWebpackPlugin.files.css) { %}
+  <link href="{%=o.htmlWebpackPlugin.files.css[css] %}" rel="stylesheet">
+  {% } %}
 </head>
 <body>
 <div id="content"></div>
-<script src="main.js"></script>
+{% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
+<script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
+{% } %}
 </body>
 </html>

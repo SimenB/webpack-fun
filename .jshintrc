@@ -28,5 +28,6 @@
 
   // Environments
   "devel": true, // Development/debugging (alert, confirm, etc)
-  "node": true
+  "node": true,
+  "browser": true
 }

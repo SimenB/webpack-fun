@@ -6,6 +6,8 @@ var gutil = require('gulp-util');
 var webpack = require('gulp-webpack-build');
 var WebpackDevServer = require('webpack-dev-server');
 
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 var merge = require('deepmerge');
 
 var src = './src';
@@ -19,7 +21,7 @@ var CONFIG_FILENAME = webpack.config.CONFIG_FILENAME;
 gulp.task('clean', function (cb) {
   var del = require('del');
 
-  del('build/', cb);
+  del('src/hpp/build/', cb);
 });
 
 gulp.task('lint', function () {
@@ -34,14 +36,11 @@ gulp.task('lint', function () {
     .pipe(jscs());
 });
 
-gulp.task('move', [ 'clean' ], function () {
-  return gulp
-    .src('src/common/index.html')
-    .pipe(gulp.dest(dest));
-});
-
-gulp.task('webpack:dev', [ 'move' ], function () {
+gulp.task('webpack:dev', [ 'clean' ], function () {
   var webpackOptions = {
+    output: {
+      path: path.resolve('src', 'hpp', 'build')
+    },
     debug: true,
     devtool: '#source-map',
     watchDelay: 200,
@@ -50,7 +49,10 @@ gulp.task('webpack:dev', [ 'move' ], function () {
       alias: {
         'dev-module': 'common-assets/scripts/noop'
       }
-    }
+    },
+    plugins: [
+      new HtmlWebpackPlugin({ template: 'src/common/index.html', title: 'KJ' })
+    ]
   };
 
   return gulp
@@ -69,10 +71,13 @@ gulp.task('webpack:dev', [ 'move' ], function () {
     .pipe(gulp.dest(''));
 });
 
-gulp.task('webpack:prod', [ 'move' ], function () {
+gulp.task('webpack:prod', [ 'clean' ], function () {
   var webpackCore = webpack.core;
 
   var webpackOptions = {
+    output: {
+      path: path.resolve('src', 'hpp', 'build')
+    },
     entry: './hpp/scripts/index.js',
     resolve: {
       alias: {
@@ -80,13 +85,9 @@ gulp.task('webpack:prod', [ 'move' ], function () {
       }
     },
     plugins: [
-      new webpackCore.optimize.UglifyJsPlugin({
-        compress: {
-          side_effects: false,
-          conditionals: false
-        }
-      }),
-      new webpackCore.optimize.DedupePlugin()
+      new webpackCore.optimize.UglifyJsPlugin(),
+      new webpackCore.optimize.DedupePlugin(),
+      new HtmlWebpackPlugin({ template: 'src/common/index.html', title: 'KJ' })
     ]
   };
 
@@ -101,7 +102,7 @@ gulp.task('webpack:prod', [ 'move' ], function () {
     }))
     .pipe(webpack.failAfter({
       errors: true,
-      warnings: true
+      warnings: false
     }))
     .pipe(gulp.dest(''))
     .on('error', function () {
@@ -137,6 +138,9 @@ gulp.task('webpack-dev-server', function () {
   var webpackCore = webpack.core;
 
   var webpackOptions = {
+    output: {
+      path: path.resolve('src', 'hpp', 'build')
+    },
     debug: true,
     devtool: '#source-map',
     watchDelay: 200,
@@ -150,6 +154,7 @@ gulp.task('webpack-dev-server', function () {
 
   webpackConfig.plugins.push(new webpackCore.HotModuleReplacementPlugin());
   webpackConfig.plugins.push(new webpackCore.NoErrorsPlugin());
+  webpackConfig.plugins.push(new HtmlWebpackPlugin({ template: 'src/common/index.html', title: 'KJ' }));
 
   // Start a webpack-dev-server
   var options = merge(webpackConfig, webpackOptions);
@@ -157,7 +162,7 @@ gulp.task('webpack-dev-server', function () {
   var compiler = webpackCore(options);
 
   new WebpackDevServer(compiler, {
-    contentBase: webpackConfig.devServer.contentBase,
+    contentBase: webpackOptions.output.path,
     hot: true,
     inline: true
   }).listen(8080, 'localhost', function (err) {
@@ -165,6 +170,6 @@ gulp.task('webpack-dev-server', function () {
         throw new gutil.PluginError('webpack-dev-server', err);
       }
       // Server listening
-      gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
+      gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/');
     });
 });

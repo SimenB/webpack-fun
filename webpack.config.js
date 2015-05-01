@@ -6,23 +6,14 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer-core');
 
-function createLibPath(lib) {
+function createLibPath (lib) {
   return path.resolve('src', 'common', 'scripts', 'libs', lib);
 }
-
-var outputPath = path.resolve('./build');
 
 module.exports = {
   context: path.resolve('./src'),
   output: {
-    path: outputPath,
-    publicPath: 'build/', // relative path for github pages
-    filename: 'main.js' // no hash in main.js because index.html is a static page
-  },
-  devServer: {
-    contentBase: outputPath,
-    hot: true,
-    inline: true
+    filename: 'assets/kj-[hash].js'
   },
   recordsOutputPath: path.resolve('./records.json'),
   resolve: {
@@ -47,7 +38,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('assets/kj-[contenthash].css'),
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 })
   ],
   postcss: [ autoprefixer({ browsers: [ 'Chrome >= 33', 'IE >= 8' ] }) ]
