@@ -24,17 +24,17 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.json$/, loader: 'json-loader' },
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?optional=runtime' },
-      { test: /\.styl$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!stylus-loader') },
-      { test: /\.hbs$/, loader: 'handlebars-loader' },
-      { test: /\.png$/, loader: 'url-loader?prefix=img/&limit=5000' },
-      { test: /\.jpg$/, loader: 'url-loader?prefix=img/&limit=5000' },
-      { test: /\.gif$/, loader: 'url-loader?prefix=img/&limit=5000' },
-      { test: /\.woff$/, loader: 'url-loader?prefix=font/&limit=5000' },
-      { test: /\.eot$/, loader: 'file-loader?prefix=font/' },
-      { test: /\.ttf$/, loader: 'file-loader?prefix=font/' },
-      { test: /\.svg$/, loader: 'file-loader?prefix=font/' }
+      { test: /\.json$/, loader: 'json' },
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel?optional=runtime' },
+      { test: /\.styl$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!stylus') },
+      { test: /\.hbs$/, loader: 'handlebars' },
+      { test: /\.png$/, loader: 'url?prefix=img/&limit=5000' },
+      { test: /\.jpg$/, loader: 'url?prefix=img/&limit=5000' },
+      { test: /\.gif$/, loader: 'url?prefix=img/&limit=5000' },
+      { test: /\.woff$/, loader: 'url?prefix=font/&limit=5000' },
+      { test: /\.eot$/, loader: 'file?prefix=font/' },
+      { test: /\.ttf$/, loader: 'file?prefix=font/' },
+      { test: /\.svg$/, loader: 'file?prefix=font/' }
     ]
   },
   plugins: [
