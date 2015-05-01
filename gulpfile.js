@@ -190,6 +190,15 @@ gulp.task('test', function (done) {
 
   karma.start({
     configFile: path.resolve('karma.conf.js'),
+    browsers: [ 'PhantomJS' ],
     singleRun: true
+  }, done);
+});
+
+gulp.task('test:dev', function (done) {
+  var karma = require('karma').server;
+
+  karma.start({
+    configFile: path.resolve('karma.conf.js')
   }, done);
 });

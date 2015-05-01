@@ -19,7 +19,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/**/*.js'
+      'test/**/*.spec.js'
     ],
 
     // list of files to exclude
@@ -28,7 +28,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': [ 'webpack', 'sourcemap' ]
+      'test/**/*.spec.js': [ 'webpack', 'sourcemap' ]
     },
 
     // test results reporter to use
@@ -51,7 +51,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: [ 'PhantomJS' ],
+    browsers: [ 'Chrome' ],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
