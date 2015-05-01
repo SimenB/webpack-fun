@@ -1,12 +1,18 @@
 'use strict';
 
-import $ from 'jquery';
+import Backbone from 'backbone';
 import template from '../templates/header.hbs';
 
 import '../styles/header.styl';
 
-function writeInHeader (string) {
-  $('#content').html(template({ name: string }));
-}
+var myView = Backbone.Layout.extend({
+  template: template,
 
-export default writeInHeader;
+  el: '#content',
+
+  serialize: function () {
+    return this.model.toJSON();
+  }
+});
+
+export default myView;
