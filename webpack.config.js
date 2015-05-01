@@ -10,17 +10,21 @@ function createLibPath(lib) {
   return path.resolve('src', 'common', 'scripts', 'libs', lib);
 }
 
+var outputPath = path.resolve('./build');
+
 module.exports = {
   context: path.resolve('./src'),
   output: {
-    path: path.join(__dirname, 'build'),
-    publicPath: 'assets/', // relative path for github pages
-    filename: 'main.js', // no hash in main.js because index.html is a static page
-    chunkFilename: '[hash]/js/[id].js',
-    hotUpdateMainFilename: '[hash]/update.json',
-    hotUpdateChunkFilename: '[hash]/js/[id].update.js'
+    path: outputPath,
+    publicPath: 'build/', // relative path for github pages
+    filename: 'main.js' // no hash in main.js because index.html is a static page
   },
-  recordsOutputPath: path.join(__dirname, 'records.json'),
+  devServer: {
+    contentBase: outputPath,
+    hot: true,
+    inline: true
+  },
+  recordsOutputPath: path.resolve('./records.json'),
   resolve: {
     alias: {
       'common-assets': path.resolve('src', 'common'),

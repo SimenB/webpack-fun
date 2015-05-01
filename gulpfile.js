@@ -2,7 +2,11 @@
 
 var path = require('path');
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var webpack = require('gulp-webpack-build');
+var WebpackDevServer = require('webpack-dev-server');
+
+var merge = require('deepmerge');
 
 var src = './src';
 var dest = './build';
@@ -66,7 +70,7 @@ gulp.task('webpack:dev', [ 'move' ], function () {
 });
 
 gulp.task('webpack:prod', [ 'move' ], function () {
-  var webpackCore = require('webpack');
+  var webpackCore = webpack.core;
 
   var webpackOptions = {
     entry: './hpp/scripts/index.js',
@@ -125,5 +129,42 @@ gulp.task('watch', [ 'webpack' ], function () {
               .pipe(gulp.dest(dest));
           }));
       }
+    });
+});
+
+gulp.task('webpack-dev-server', function () {
+  var webpackConfig = require(path.resolve(CONFIG_FILENAME));
+  var webpackCore = webpack.core;
+
+  var webpackOptions = {
+    debug: true,
+    devtool: '#source-map',
+    watchDelay: 200,
+    entry: [ 'webpack-dev-server/client?http://0.0.0.0:8080', 'webpack/hot/only-dev-server', './hpp/scripts/index.js' ],
+    resolve: {
+      alias: {
+        'dev-module': 'common-assets/scripts/noop'
+      }
+    }
+  };
+
+  webpackConfig.plugins.push(new webpackCore.HotModuleReplacementPlugin());
+  webpackConfig.plugins.push(new webpackCore.NoErrorsPlugin());
+
+  // Start a webpack-dev-server
+  var options = merge(webpackConfig, webpackOptions);
+
+  var compiler = webpackCore(options);
+
+  new WebpackDevServer(compiler, {
+    contentBase: webpackConfig.devServer.contentBase,
+    hot: true,
+    inline: true
+  }).listen(8080, 'localhost', function (err) {
+      if (err) {
+        throw new gutil.PluginError('webpack-dev-server', err);
+      }
+      // Server listening
+      gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
     });
 });
