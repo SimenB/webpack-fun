@@ -134,6 +134,7 @@ gulp.task('watch', [ 'webpack' ], function () {
 });
 
 function devServer (project) {
+  var opn = require('opn');
   var webpackConfig = require(path.resolve(CONFIG_FILENAME));
   var webpackCore = webpack.core;
 
@@ -178,6 +179,8 @@ function devServer (project) {
       }
       // Server listening
       gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/');
+
+      opn('http://localhost:8080/webpack-dev-server/');
     });
 }
 
