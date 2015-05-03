@@ -5,6 +5,7 @@ var path = require('path');
 
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer-core');
+var browsersSupported = { browsers: [ 'last 2 versions', 'IE >= 8', 'Chrome >= 33' ] };
 
 function createLibPath (lib) {
   return path.resolve('src', 'common', 'scripts', 'libs', lib);
@@ -34,11 +35,19 @@ module.exports = {
       { test: /\.eot$/, loader: 'file?prefix=font/' },
       { test: /\.ttf$/, loader: 'file?prefix=font/' },
       { test: /\.svg$/, loader: 'file?prefix=font/' }
+    ],
+    postLoaders: [
+      {
+        test: /\.js$/,
+        exclude: /-loader/,
+        loader: 'autopolyfiller',
+        query: browsersSupported
+      }
     ]
   },
   plugins: [
     new ExtractTextPlugin('kj-[contenthash].css'),
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 })
   ],
-  postcss: [ autoprefixer({ browsers: [ 'Chrome >= 33', 'IE >= 8' ] }) ]
+  postcss: [ autoprefixer(browsersSupported) ]
 };
