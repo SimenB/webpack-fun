@@ -4,6 +4,7 @@ var path = require('path');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var webpack = require('gulp-webpack-build');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var WebpackDevServer = require('webpack-dev-server');
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -51,8 +52,14 @@ gulp.task('webpack:dev', [ 'clean' ], function () {
       }
     },
     plugins: [
+      new ExtractTextPlugin('kj-[contenthash].css'),
       new HtmlWebpackPlugin({ template: 'src/common/index.html', title: 'KJ' })
-    ]
+    ],
+    module: {
+      loaders: [
+        { test: /\.styl$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!stylus') }
+      ]
+    }
   };
 
   return gulp
@@ -85,10 +92,16 @@ gulp.task('webpack:prod', [ 'clean' ], function () {
       }
     },
     plugins: [
+      new ExtractTextPlugin('kj-[contenthash].css'),
       new webpackCore.optimize.UglifyJsPlugin(),
       new webpackCore.optimize.DedupePlugin(),
       new HtmlWebpackPlugin({ template: 'src/common/index.html', title: 'KJ' })
-    ]
+    ],
+    module: {
+      loaders: [
+        { test: /\.styl$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!stylus') }
+      ]
+    }
   };
 
   return gulp
@@ -160,6 +173,7 @@ function devServer (project) {
   webpackConfig.plugins.push(new webpackCore.HotModuleReplacementPlugin());
   webpackConfig.plugins.push(new webpackCore.NoErrorsPlugin());
   webpackConfig.plugins.push(new HtmlWebpackPlugin({ template: 'src/common/index.html', title: 'KJ' }));
+  webpackConfig.module.loaders.push({ test: /\.styl$/, loader: 'style!css!postcss!stylus' });
 
   // Start a webpack-dev-server
   var options = merge(webpackConfig, webpackOptions);

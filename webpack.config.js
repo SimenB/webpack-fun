@@ -27,7 +27,6 @@ module.exports = {
     loaders: [
       { test: /\.json$/, loader: 'json' },
       { test: /\.js$/, exclude: /node_modules/, loader: 'babel?optional=runtime' },
-      { test: /\.styl$/, loader: ExtractTextPlugin.extract('style', 'css!postcss!stylus') },
       { test: /\.hbs$/, loader: 'handlebars', query: { inlineRequires: '/images/' } },
       { test: /\.png$/, loader: 'url?prefix=img/&limit=5000' },
       { test: /\.jpg$/, loader: 'url?prefix=img/&limit=5000' },
@@ -35,18 +34,9 @@ module.exports = {
       { test: /\.eot$/, loader: 'file?prefix=font/' },
       { test: /\.ttf$/, loader: 'file?prefix=font/' },
       { test: /\.svg$/, loader: 'file?prefix=font/' }
-    ],
-    postLoaders: [
-      {
-        test: /\.js$/,
-        exclude: /-loader/,
-        loader: 'autopolyfiller',
-        query: browsersSupported
-      }
     ]
   },
   plugins: [
-    new ExtractTextPlugin('kj-[contenthash].css'),
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 20 })
   ],
   postcss: [ autoprefixer(browsersSupported) ]

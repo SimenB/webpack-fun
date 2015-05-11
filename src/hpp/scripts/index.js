@@ -1,5 +1,9 @@
 'use strict';
 
+if (module.hot) {
+  module.hot.accept();
+}
+
 import 'common-assets/scripts/app';
 import sout from 'common-assets/scripts/sout';
 import WriteInHeader from 'common-assets/scripts/dom';
