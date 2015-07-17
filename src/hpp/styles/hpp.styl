@@ -1,2 +1,13 @@
+rotate-all(degrees, args...) {
+    unless unit(degrees) is 'deg' {
+        error('"degrees" må være i grader');
+    }
+
+    transform: rotate(degrees) args;
+}
+
 h2
   color: yellow
+
+p
+  rotate-all(180px)

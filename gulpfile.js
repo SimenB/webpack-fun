@@ -69,7 +69,8 @@ gulp.task('webpack:dev', [ 'clean' ], function () {
     .pipe(webpack.compile())
     .pipe(webpack.format({
       version: false,
-      timings: true
+      timings: true,
+      errorDetails: true
     }))
     .pipe(webpack.failAfter({
       errors: true,
@@ -203,13 +204,14 @@ gulp.task('webpack-dev-server:hpp', function () {
 });
 
 gulp.task('test', function (done) {
-  var karma = require('karma').server;
-
-  karma.start({
+  var karma = require('karma');
+  var server = new karma.Server({
     configFile: path.resolve('karma.conf.js'),
     browsers: [ 'PhantomJS' ],
     singleRun: true
   }, done);
+
+  server.start();
 });
 
 gulp.task('test:dev', function (done) {
