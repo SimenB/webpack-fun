@@ -69,7 +69,8 @@ gulp.task('webpack:dev', [ 'clean' ], function () {
     .pipe(webpack.compile())
     .pipe(webpack.format({
       version: false,
-      timings: true
+      timings: true,
+      errorDetails: true
     }))
     .pipe(webpack.failAfter({
       errors: true,
