@@ -6,6 +6,8 @@ if (module.hot) {
 
 import 'common-assets/scripts/app';
 import sout from 'common-assets/scripts/sout';
+import $ from 'jquery';
+import React from 'react';
 import WriteInHeader from 'common-assets/scripts/dom';
 
 import greeting from './greeting';
@@ -20,5 +22,7 @@ sout('halla!');
 new WriteInHeader({ model: model }).render();
 
 greeting('Simen');
+
+React.render(<WriteInHeader model={model}/>, $('#content')[0]);
 
 import 'dev-module';

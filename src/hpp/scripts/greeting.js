@@ -8,12 +8,10 @@ var MyModel = Backbone.Model.extend({
   url: 'hello'
 });
 
-function callback (name) {
+export default function callback (name) {
   var modelAgain = new MyModel();
 
-  modelAgain.fetch({ data: $.param({ name: name }) }).done(function () {
+  modelAgain.fetch({ data: $.param({ name: name }) }).done(() => {
     sout(modelAgain.toJSON());
   });
 }
-
-export default callback;
