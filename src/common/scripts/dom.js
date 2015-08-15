@@ -5,7 +5,7 @@ import template from '../templates/header.hbs';
 import React from 'react';
 import cat from '../images/cat.jpg';
 
-var myView = Backbone.Layout.extend({
+export const MyView = Backbone.Layout.extend({
   template: template,
 
   el: '#content',
@@ -26,7 +26,7 @@ export default class View extends React.Component {
   render () {
     return (
       <div>
-        <h1 id="headerYo">{this.state.model.get('name')} er barsk!</h1>
+        <h1 id='headerYo'>{this.state.model.get('name')} er barsk!</h1>
 
         <h2>What is even life</h2>
         <p>meep</p>
